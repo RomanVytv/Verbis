@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Verbis</string>
+
+    <string name="lbl_home">Home</string>
+    <string name="lbl_favorites">Favorites</string>
+    <string name="lbl_today_word">Today\'s word</string>
+    <string name="lbl_settings">Settings</string>
+
+</resources>
