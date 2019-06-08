@@ -1,4 +1,4 @@
-package com.romanvytv.verbis.data
+package com.romanvytv.verbis.data.entities
 
 import com.google.gson.annotations.SerializedName
 import java.util.*

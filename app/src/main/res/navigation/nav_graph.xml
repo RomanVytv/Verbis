@@ -37,7 +37,7 @@
 
 	<fragment
 			android:id="@+id/todayFragment"
-			android:name="com.romanvytv.verbis.today.TodayFragment"
+			android:name="com.romanvytv.verbis.today.TodayWordFragment"
 			android:label="@string/lbl_today_word"/>
 	<fragment
 			android:id="@+id/searchFragment"
