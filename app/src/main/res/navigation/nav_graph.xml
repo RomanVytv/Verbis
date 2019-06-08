@@ -8,7 +8,7 @@
 	<fragment
 			android:id="@+id/homeFragment"
 			android:name="com.romanvytv.verbis.home.HomeFragment"
-			android:label="HomeFragment"
+			android:label="Home"
 			tools:layout="@layout/fragment_home">
 		<action
 				android:id="@+id/action_homeFragment_to_favoritesFragment"
@@ -24,17 +24,17 @@
 	<fragment
 			android:id="@+id/favoritesFragment"
 			android:name="com.romanvytv.verbis.favorites.FavoritesFragment"
-			android:label="FavoritesFragment"
+			android:label="Favorites"
 			tools:layout="@layout/fragment_favorites"/>
 
 	<fragment
 			android:id="@+id/settingsFragment"
 			android:name="com.romanvytv.verbis.settings.SettingsFragment"
-			android:label="SettingsFragment"/>
+			android:label="Settings"/>
 
 	<fragment
 			android:id="@+id/todayFragment"
 			android:name="com.romanvytv.verbis.today.TodayFragment"
-			android:label="TodayFragment"/>
+			android:label="Today\'s word"/>
 
 </navigation>
