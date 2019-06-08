@@ -17,12 +17,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         navigationController = Navigation.findNavController(this, R.id.nav_host_fragment)
-        navigationController.addOnDestinationChangedListener { _, destination, _ -> updateToolbar(destination) }
-
         NavigationUI.setupWithNavController(bottom_navigation, navigationController)
-    }
-
-    private fun updateToolbar(destination: NavDestination) {
-        toolbar_main.title = destination.label
     }
 }
