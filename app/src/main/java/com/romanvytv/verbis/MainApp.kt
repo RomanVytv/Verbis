@@ -7,7 +7,9 @@ import org.koin.core.context.startKoin
 
 class MainApp : Application() {
 
-    lateinit var appContext: Context
+    companion object {
+        lateinit var appContext: Context
+    }
 
     override fun onCreate() {
         super.onCreate()

@@ -7,6 +7,10 @@ val apiModule = module {
     single { WordsApi.create() }
 }
 
+val dataModule = module {
+
+}
+
 val modules = listOf(
     apiModule
 )

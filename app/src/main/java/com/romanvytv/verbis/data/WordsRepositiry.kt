@@ -1,9 +1,11 @@
 package com.romanvytv.verbis.data
 
+import android.util.Log
 import com.romanvytv.verbis.core.Either
 import com.romanvytv.verbis.core.exception.Failure
-import com.romanvytv.verbis.data.entities.TodayWordEntity
-import com.romanvytv.verbis.data.entities.WordEntity
+import com.romanvytv.verbis.data.entities.TodayWord
+import com.romanvytv.verbis.data.entities.Word
+import com.romanvytv.verbis.data.local.AppDatabase
 import com.romanvytv.verbis.data.network.WordsApi
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
@@ -15,25 +17,20 @@ abstract class WordsRepository {
     class Network
     constructor(private val api: WordsApi) : WordsRepository() {
 
-        suspend fun randomWord(): Either<Failure, WordEntity> =
-            request(api.getRandomWordAsync(), { it }, WordEntity.empty())
+        suspend fun randomWord(): Either<Failure, Word> =
+            request(api.getRandomWordAsync(), { it }, Word.empty())
 
-        suspend fun getWordDetails(word: String): Either<Failure, WordEntity> =
-            request(api.getWordDetailsAsync(word), { it }, WordEntity.empty())
+        suspend fun getWordDetails(word: String): Either<Failure, Word> =
+            request(api.getWordDetailsAsync(word), { it }, Word.empty())
 
     }
 
     class Local
-    constructor() {
+    constructor(private val db: AppDatabase) {
 
-        fun getTodaysWord(): TodayWordEntity {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
+        fun getTodaysWord(): TodayWord = db.todayWordDao().getLastTodayWord()
 
-        fun saveTodayWord(newWord: TodayWordEntity) {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
-
+        fun saveTodayWord(newWord: TodayWord) : Long = db.todayWordDao().insert(newWord)
     }
 
     protected suspend fun <T, R> request(
@@ -42,6 +39,8 @@ abstract class WordsRepository {
         default: T
     ): Either<Failure, R> {
         val response = request.await()
+
+        Log.d("zalu", response.toString())
         return when (response.isSuccessful) {
             true -> Either.Right(transform((response.body() ?: default)))
             false -> Either.Left(Failure.ServerError)
