@@ -2,7 +2,7 @@ package com.romanvytv.verbis
 
 import android.app.Application
 import android.content.Context
-import com.romanvytv.verbis.core.di.mods
+import com.romanvytv.verbis.core.di.modules
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -18,7 +18,7 @@ class MainApp : Application() {
 
         startKoin {
             androidContext(this@MainApp)
-            modules(mods)
+            modules(modules)
         }
     }
 }

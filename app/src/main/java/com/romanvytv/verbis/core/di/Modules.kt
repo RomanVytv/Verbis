@@ -15,7 +15,7 @@ val dataModule = module {
     single { AppDatabase.newInstance() }
 }
 
-val mods = listOf(
+val modules = listOf(
     apiModule,
     dataModule
 )

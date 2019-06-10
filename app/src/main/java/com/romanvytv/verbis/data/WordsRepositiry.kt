@@ -28,7 +28,7 @@ abstract class WordsRepository {
     class Local
     constructor(private val db: AppDatabase) {
 
-        fun getTodaysWord(): TodayWord = db.todayWordDao().getLastTodayWord()
+        fun getTodaysWord(): TodayWord? = db.todayWordDao().getLastTodayWord()
 
         fun saveTodayWord(newWord: TodayWord) : Long = db.todayWordDao().insert(newWord)
     }
@@ -40,7 +40,6 @@ abstract class WordsRepository {
     ): Either<Failure, R> {
         val response = request.await()
 
-        Log.d("zalu", response.toString())
         return when (response.isSuccessful) {
             true -> Either.Right(transform((response.body() ?: default)))
             false -> Either.Left(Failure.ServerError)

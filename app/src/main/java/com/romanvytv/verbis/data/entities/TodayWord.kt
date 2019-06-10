@@ -7,12 +7,13 @@ import androidx.room.PrimaryKey
 data class TodayWord(
     @PrimaryKey(autoGenerate = true)
     var id: Long?,
-    val word: String,
-    val timeStamp: Long
+    var word: String,
+    var timeStamp: Long
 ) {
+    constructor() : this(null, "", System.currentTimeMillis())
     constructor(word: String) : this(null, word, System.currentTimeMillis())
 
     companion object {
-        fun empty() = TodayWord(id = null, word = "", timeStamp = System.currentTimeMillis())
+        fun empty() = TodayWord()
     }
 }

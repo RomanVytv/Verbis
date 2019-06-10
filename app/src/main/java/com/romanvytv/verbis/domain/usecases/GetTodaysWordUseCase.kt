@@ -7,7 +7,6 @@ import com.romanvytv.verbis.core.exception.Failure
 import com.romanvytv.verbis.data.WordsRepository
 import com.romanvytv.verbis.data.entities.TodayWord
 import com.romanvytv.verbis.data.entities.Word
-import java.util.*
 
 class GetTodaysWordUseCase
 constructor(
@@ -18,7 +17,7 @@ constructor(
     override suspend fun run(params: None): Either<Failure, Word> {
         val existingTodayWord = localRepo.getTodaysWord()
 
-        if (DateUtils.isToday(existingTodayWord.timeStamp))
+        if (existingTodayWord != null && DateUtils.isToday(existingTodayWord.timeStamp))
             return remoteRepo.getWordDetails(existingTodayWord.word)
 
         val newWord = remoteRepo.randomWord()
