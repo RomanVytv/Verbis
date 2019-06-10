@@ -9,6 +9,8 @@ import com.romanvytv.verbis.data.entities.Word
 import com.romanvytv.verbis.data.local.dao.TodayWordDao
 import com.romanvytv.verbis.data.local.dao.WordDao
 
+private const val DB_NAME = "words.db"
+
 @Database(entities = [Word::class, TodayWord::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
 
@@ -16,22 +18,11 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun todayWordDao(): TodayWordDao
 
     companion object {
-        private var INSTANCE: AppDatabase? = null
+        fun newInstance() = Room.databaseBuilder(
+            MainApp.appContext,
+            AppDatabase::class.java,
+            DB_NAME
+        ).build()
 
-        fun getInstance(): AppDatabase? {
-            if (INSTANCE == null) {
-                synchronized(AppDatabase::class) {
-                    INSTANCE = Room.databaseBuilder(
-                        MainApp.appContext,
-                        AppDatabase::class.java, "words.db"
-                    ).build()
-                }
-            }
-            return INSTANCE
-        }
-
-        fun destroyInstance() {
-            INSTANCE = null
-        }
     }
 }
