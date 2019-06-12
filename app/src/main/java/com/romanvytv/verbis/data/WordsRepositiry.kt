@@ -38,12 +38,7 @@ abstract class WordsRepository {
 		transform: (T) -> R,
 		default: T
 	): Either<Failure, R> {
-		Log.d("qqqq", "request")
-
 		val response = request.await()
-
-		Log.d("qqqq", response.toString())
-
 		return when (response.isSuccessful) {
 			true -> Either.Right(transform((response.body() ?: default)))
 			false -> Either.Left(Failure.ServerError)

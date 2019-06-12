@@ -1,10 +1,7 @@
 package com.romanvytv.verbis.core
 
 import com.romanvytv.verbis.core.exception.Failure
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 /**
  * Abstract class for a Use Case (Interactor in terms of Clean Architecture).
@@ -16,14 +13,13 @@ import kotlinx.coroutines.launch
  */
 abstract class UseCase<out Type, in Params> where Type : Any {
 
-    abstract suspend fun run(params: Params): Either<Failure, Type>
+	abstract suspend fun run(params: Params): Either<Failure, Type>
 
-    suspend operator fun invoke(params: Params, onResult: (Either<Failure, Type>) -> Unit = {}) {
-        coroutineScope {
-            val job = async(Dispatchers.IO) { run(params) }
-            launch(Dispatchers.Main) { onResult(job.await()) }
-        }
-    }
+	//TODO: check proper dispatchers using for coroutines
+	operator fun invoke(scope: CoroutineScope, params: Params, onResult: (Either<Failure, Type>) -> Unit = {}) {
+		val backgroundJob = scope.async(Dispatchers.IO) { run(params) }
+		scope.launch(Dispatchers.Main) { onResult(backgroundJob.await()) }
+	}
 
-    class None
+	class None
 }

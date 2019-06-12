@@ -2,12 +2,12 @@ package com.romanvytv.verbis.search
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.romanvytv.verbis.core.BaseViewModel
 import com.romanvytv.verbis.core.UseCase
 import com.romanvytv.verbis.core.exception.Failure
 import com.romanvytv.verbis.data.entities.Word
 import com.romanvytv.verbis.domain.usecases.GetRandomWordUseCase
-import kotlinx.coroutines.launch
 
 class SearchViewModel
 constructor(
@@ -23,8 +23,8 @@ constructor(
 		return randomWord
 	}
 
-	fun loadWord() = uiScope.launch {
-		getRandomWordUseCase(UseCase.None()) { it.either(::handleFailure, ::handleWord) }
+	private fun loadWord() {
+		getRandomWordUseCase(viewModelScope, UseCase.None()) { it.either(::handleFailure, ::handleWord) }
 	}
 
 	private fun handleFailure(failure: Failure) {
