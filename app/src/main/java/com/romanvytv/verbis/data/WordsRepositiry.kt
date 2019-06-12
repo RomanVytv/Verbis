@@ -14,45 +14,39 @@ import retrofit2.Response
 //TODO: handle repos local/remote
 abstract class WordsRepository {
 
-    class Network
-    constructor(private val api: WordsApi) : WordsRepository() {
+	class Network
+	constructor(private val api: WordsApi) : WordsRepository() {
 
-        //        suspend fun randomWord(): Either<Failure, Word> =
-//            request(api.getRandomWordAsync(), { it }, Word.empty())
-//
-        suspend fun randomWord(): Either<Failure, Word> {
-            val word = Word.empty()
-            word.word = "qwertyyyyyy"
-            return Either.Right(word)
-        }
+		suspend fun randomWord(): Either<Failure, Word> =
+			request(api.getRandomWordAsync(), { it }, Word.empty())
 
-        suspend fun getWordDetails(word: String): Either<Failure, Word> =
-            request(api.getWordDetailsAsync(word), { it }, Word.empty())
+		suspend fun getWordDetails(word: String): Either<Failure, Word> =
+			request(api.getWordDetailsAsync(word), { it }, Word.empty())
 
-    }
+	}
 
-    class Local
-    constructor(private val db: AppDatabase) {
+	class Local
+	constructor(private val db: AppDatabase) {
 
-        fun getTodaysWord(): TodayWord? = db.todayWordDao().getLastTodayWord()
+		fun getTodaysWord(): TodayWord? = db.todayWordDao().getLastTodayWord()
 
-        fun saveTodayWord(newWord: TodayWord): Long = db.todayWordDao().insert(newWord)
-    }
+		fun saveTodayWord(newWord: TodayWord): Long = db.todayWordDao().insert(newWord)
+	}
 
-    protected suspend fun <T, R> request(
-        request: Deferred<Response<T>>,
-        transform: (T) -> R,
-        default: T
-    ): Either<Failure, R> {
-        Log.d("qqqq", "request")
+	protected suspend fun <T, R> request(
+		request: Deferred<Response<T>>,
+		transform: (T) -> R,
+		default: T
+	): Either<Failure, R> {
+		Log.d("qqqq", "request")
 
-        val response = request.await()
+		val response = request.await()
 
-        Log.d("qqqq", response.toString())
+		Log.d("qqqq", response.toString())
 
-        return when (response.isSuccessful) {
-            true -> Either.Right(transform((response.body() ?: default)))
-            false -> Either.Left(Failure.ServerError)
-        }
-    }
+		return when (response.isSuccessful) {
+			true -> Either.Right(transform((response.body() ?: default)))
+			false -> Either.Left(Failure.ServerError)
+		}
+	}
 }

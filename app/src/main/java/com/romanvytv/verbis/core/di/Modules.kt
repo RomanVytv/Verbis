@@ -5,29 +5,30 @@ import com.romanvytv.verbis.data.local.AppDatabase
 import com.romanvytv.verbis.data.network.WordsApi
 import com.romanvytv.verbis.domain.usecases.GetRandomWordUseCase
 import com.romanvytv.verbis.search.SearchViewModel
+import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val apiModule = module {
-    single { WordsApi.create() }
+	single { WordsApi.create() }
 }
 
 val dataModule = module {
-    single { WordsRepository.Network(get()) }
-    single { WordsRepository.Local(get()) }
-    single { AppDatabase.newInstance() }
+	single { WordsRepository.Network(get()) }
+	single { WordsRepository.Local(get()) }
+	single { AppDatabase.newInstance() }
 }
 
 val useCasesModule = module {
-    factory { GetRandomWordUseCase(get()) }
+	factory { GetRandomWordUseCase(get()) }
 }
 
 val viewModelsModule = module {
-    factory { SearchViewModel() }
+	viewModel { SearchViewModel(get()) }
 }
 
 val modules = listOf(
-    apiModule,
-    useCasesModule,
-    viewModelsModule,
-    dataModule
+	apiModule,
+	useCasesModule,
+	viewModelsModule,
+	dataModule
 )
