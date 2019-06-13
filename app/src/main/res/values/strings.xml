@@ -6,5 +6,9 @@
     <string name="lbl_today_word">Today\'s word</string>
     <string name="lbl_settings">Settings</string>
     <string name="lbl_search">Search</string>
+    <string name="lbl_details">Details</string>
+
+    <string name="lbl_type_of">type of</string>
+    <string name="lbl_derivations">derivations</string>
 
 </resources>

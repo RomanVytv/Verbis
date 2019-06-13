@@ -13,7 +13,7 @@
 			android:icon="@drawable/ic_search"
 			android:title="@string/lbl_search"/>
 	<item
-			android:id="@+id/todayFragment"
+			android:id="@+id/detailsFragment"
 			android:icon="@drawable/ic_today"
 			android:title="@string/lbl_today_word"/>
 	<item

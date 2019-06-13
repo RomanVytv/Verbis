@@ -10,23 +10,39 @@ import com.romanvytv.verbis.data.entities.Word
 
 class GetTodaysWordUseCase
 constructor(
-    private val localRepo: WordsRepository.Local,
-    private val remoteRepo: WordsRepository.Network
+	private val localRepo: WordsRepository.Local,
+	private val remoteRepo: WordsRepository.Network
 ) : UseCase<Word, UseCase.None>() {
 
-    override suspend fun run(params: None): Either<Failure, Word> {
-        val existingTodayWord = localRepo.getTodaysWord()
+	private var resultsCount = 0
 
-        if (existingTodayWord != null && DateUtils.isToday(existingTodayWord.timeStamp))
-            return remoteRepo.getWordDetails(existingTodayWord.word)
+	override suspend fun run(params: None): Either<Failure, Word> {
+		val existingTodayWord = localRepo.getTodaysWord()
 
-        val newWord = remoteRepo.randomWord()
+		if (existingTodayWord != null && DateUtils.isToday(existingTodayWord.timeStamp))
+			return remoteRepo.getWordDetails(existingTodayWord.word)
 
-        if (newWord.isLeft)
-            return Either.Left(Failure.ServerError)
+		var result: Either<Failure, Word>
 
-        newWord.either({}, { localRepo.saveTodayWord(TodayWord(it.word)) })
+		do {
+			result = remoteRepo.randomWord()
+		} while (!isWordValid(result))
 
-        return newWord
-    }
+		result.either({}, { localRepo.saveTodayWord(TodayWord(it.word)) })
+
+		return result
+	}
+
+	private fun isWordValid(result: Either<Failure, Word>): Boolean {
+		if (result.isLeft)
+			return true
+
+		result.either({}, ::setResultsCount)
+
+		return resultsCount in 1..3
+	}
+
+	private fun setResultsCount(word: Word) {
+		resultsCount = word.results.size
+	}
 }

@@ -1,6 +1,5 @@
 package com.romanvytv.verbis.data
 
-import android.util.Log
 import com.romanvytv.verbis.core.Either
 import com.romanvytv.verbis.core.exception.Failure
 import com.romanvytv.verbis.data.entities.TodayWord

@@ -28,7 +28,7 @@ data class Word(
     )
 
     data class Pronunciation(
-        val all: String
+        val value: String
     )
 
     companion object {

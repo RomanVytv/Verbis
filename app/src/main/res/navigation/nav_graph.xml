@@ -14,8 +14,8 @@
 				android:id="@+id/action_homeFragment_to_favoritesFragment"
 				app:destination="@id/favoritesFragment"/>
 		<action
-				android:id="@+id/action_homeFragment_to_todayFragment"
-				app:destination="@id/todayFragment"/>
+				android:id="@+id/action_homeFragment_to_detailsFragment"
+				app:destination="@id/detailsFragment"/>
 		<action
 				android:id="@+id/action_homeFragment_to_settingsFragment"
 				app:destination="@id/settingsFragment"/>
@@ -43,5 +43,15 @@
 			android:id="@+id/searchFragment"
 			android:name="com.romanvytv.verbis.search.SearchFragment"
 			android:label="@string/lbl_search"/>
+
+	<fragment
+			android:id="@+id/detailsFragment"
+			android:name="com.romanvytv.verbis.details.DetailsFragment"
+			android:label="@string/lbl_details">
+		<argument
+				android:name="wordId"
+				app:argType="long"
+				android:defaultValue="-1L"/>
+	</fragment>
 
 </navigation>
