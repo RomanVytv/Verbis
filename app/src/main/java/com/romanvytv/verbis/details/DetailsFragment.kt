@@ -36,7 +36,8 @@ class DetailsFragment : BaseFragment() {
 
 			setFavoriteIcon(word.isFavorite)
 			ivFavorite.setOnClickListener {
-				viewModel.setFavorite(!word.isFavorite)
+				word.isFavorite = !word.isFavorite
+				viewModel.setFavorite(word.isFavorite)
 				setFavoriteIcon(word.isFavorite)
 			}
 

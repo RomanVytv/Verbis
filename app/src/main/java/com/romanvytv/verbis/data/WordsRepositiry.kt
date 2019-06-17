@@ -37,6 +37,8 @@ abstract class WordsRepository {
 			newWord.id = db.wordDao().insert(newWord)
 		}
 
+		fun getWord(word: String) = db.wordDao().getWord(word)
+
 		fun getAllWords() = db.wordDao().getAllWords()
 
 		fun setFavotire(wordId: Long, isFavorite: Boolean) = db.wordDao().setFavorite(wordId, isFavorite)

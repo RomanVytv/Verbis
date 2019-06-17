@@ -1,5 +1,6 @@
 package com.romanvytv.verbis.home
 
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
@@ -14,6 +15,7 @@ import com.romanvytv.verbis.data.entities.Word
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.util.*
 
+
 const val ONLY_FAVORITES = "only_favorites"
 
 class HomeFragment : BaseFragment() {
@@ -23,10 +25,12 @@ class HomeFragment : BaseFragment() {
 	private lateinit var viewModel: HomeViewModel
 	private lateinit var wordsAdapter: WordsListAdapter
 
+	private var isKeyboardShowing = false
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
+		view.viewTreeObserver.addOnGlobalLayoutListener { onLayoutChanged(view) }
 		initSearchBar()
 		initRecycleView()
 
@@ -36,6 +40,7 @@ class HomeFragment : BaseFragment() {
 		}
 
 		viewModel.load()
+
 	}
 
 	private fun initRecycleView() = with(wordsRecyclerView) {
@@ -45,6 +50,8 @@ class HomeFragment : BaseFragment() {
 
 	private fun initSearchBar() = with(persistentSearchView) {
 		setLogoIcon(R.drawable.ic_search)
+
+
 		setOnQueryTextListener(object : Search.OnQueryTextListener {
 
 			override fun onQueryTextSubmit(query: CharSequence?): Boolean {
@@ -68,11 +75,41 @@ class HomeFragment : BaseFragment() {
 		progressBarHome.visibility = View.GONE
 		wordsAdapter = WordsListAdapter(words ?: Collections.emptyList())
 		wordsAdapter.favoriteClickListener = object : WordsListAdapter.FavoriteClickListener {
-			override fun onFavoriteClick(wordId: Long?, isFavorite: Boolean) {viewModel.setFavorite(wordId, isFavorite)}
+			override fun onFavoriteClick(wordId: Long?, isFavorite: Boolean) {
+				viewModel.setFavorite(wordId, isFavorite)
+			}
 		}
 		wordsRecyclerView.adapter = wordsAdapter
 
 	}
 
 	fun filterFavorites(onlyFavorites: Boolean) = wordsAdapter.getFavoriteFilter(onlyFavorites).filter("")
+
+	private fun onLayoutChanged(view: View) {
+		val r = Rect()
+		view.getWindowVisibleDisplayFrame(r)
+		val screenHeight = view.rootView.height
+		val keypadHeight = screenHeight - r.bottom
+
+		if (keypadHeight > screenHeight * 0.15) { // 0.15 ratio is perhaps enough to determine keypad height.
+			// keyboard is opened
+			if (!isKeyboardShowing) {
+				isKeyboardShowing = true
+				onKeyboardVisibilityChanged(true)
+			}
+		} else {
+			// keyboard is closed
+			if (isKeyboardShowing) {
+				isKeyboardShowing = false
+				onKeyboardVisibilityChanged(false)
+			}
+		}
+	}
+
+	private fun onKeyboardVisibilityChanged(isVisible: Boolean) {
+		if (!isVisible) {
+			persistentSearchView.setQuery("", false)
+			viewModel.load()
+		}
+	}
 }

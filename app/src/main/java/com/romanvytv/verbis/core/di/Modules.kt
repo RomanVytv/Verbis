@@ -3,10 +3,7 @@ package com.romanvytv.verbis.core.di
 import com.romanvytv.verbis.data.WordsRepository
 import com.romanvytv.verbis.data.local.AppDatabase
 import com.romanvytv.verbis.data.network.WordsApi
-import com.romanvytv.verbis.domain.usecases.GetAllWordsUseCase
-import com.romanvytv.verbis.domain.usecases.GetRandomWordUseCase
-import com.romanvytv.verbis.domain.usecases.GetTodaysWordUseCase
-import com.romanvytv.verbis.domain.usecases.SetFavoriteUseCase
+import com.romanvytv.verbis.domain.usecases.*
 import org.koin.dsl.module
 
 val apiModule = module {
@@ -23,6 +20,7 @@ val useCasesModule = module {
 	factory { GetRandomWordUseCase(get(), get()) }
 	factory { GetAllWordsUseCase(get()) }
 	factory { SetFavoriteUseCase(get()) }
+	factory { SearchWordUseCase(get(), get()) }
 	factory { GetTodaysWordUseCase(get(), get()) }
 }
 
