@@ -9,6 +9,7 @@ import com.romanvytv.verbis.core.observe
 import com.romanvytv.verbis.core.platform.BaseFragment
 import com.romanvytv.verbis.data.entities.Result
 import com.romanvytv.verbis.data.entities.Word
+import com.romanvytv.verbis.domain.usecases.TODAY_WORD_ID
 import kotlinx.android.synthetic.main.fragment_details.*
 import kotlinx.android.synthetic.main.list_item_result.view.*
 
@@ -24,6 +25,8 @@ class DetailsFragment : BaseFragment() {
 			observe(word, ::init)
 			failure(failure, ::handleFail)
 		}
+
+		viewModel.load(arguments?.getLong("wordId") ?: TODAY_WORD_ID)
 	}
 
 	private fun init(word: Word?) {

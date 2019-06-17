@@ -2,34 +2,35 @@ package com.romanvytv.verbis.search
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.Observer
+import android.widget.Toast
+import androidx.navigation.Navigation
 import com.romanvytv.verbis.R
 import com.romanvytv.verbis.core.platform.BaseFragment
-import com.romanvytv.verbis.data.entities.Word
-import kotlinx.android.synthetic.main.fragment_today.*
-import org.koin.android.viewmodel.ext.android.viewModel
+import kotlinx.android.synthetic.main.fragment_search.*
 
 class SearchFragment : BaseFragment() {
 
 	override fun layoutId() = R.layout.fragment_search
 
-	private val searchViewModel: SearchViewModel by viewModel()
+	private lateinit var searchViewModel: SearchViewModel
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-	}
 
-	override fun onResume() {
-		super.onResume()
+		with(persistentSearchView) {
+			setVoiceInputButtonDrawable(null)
+			setOnLeftBtnClickListener {
+				Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).popBackStack()
+			}
 
-//		searchViewModel.getRandomWord().observe(this,
-//			Observer<Word> { word: Word? -> handleWord(word) })
-	}
+			setOnSearchConfirmedListener { _, query ->
+				hideKeyboard()
+				performClick()
 
-	private fun handleWord(word: Word?) {
-		if (word != null)
-			textView.text = word.toString()
-		else
-			textView.text = "word = null"
+				Toast.makeText(requireContext(), query, Toast.LENGTH_SHORT).show()
+			}
+		}
+
+
 	}
 }

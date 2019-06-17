@@ -30,6 +30,16 @@ abstract class WordsRepository {
 		fun getTodaysWord(): TodayWord? = db.todayWordDao().getLastTodayWord()
 
 		fun saveTodayWord(newWord: TodayWord): Long = db.todayWordDao().insert(newWord)
+
+		fun saveWord(newWord: Word) {
+			newWord.id = db.wordDao().insert(newWord)
+		}
+
+		fun getAllWords() = db.wordDao().getAllWords()
+
+		fun getFavoriteWords() = db.wordDao().getFavoriteWords()
+
+
 	}
 
 	protected suspend fun <T, R> request(

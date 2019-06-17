@@ -8,6 +8,8 @@ import com.romanvytv.verbis.data.WordsRepository
 import com.romanvytv.verbis.data.entities.TodayWord
 import com.romanvytv.verbis.data.entities.Word
 
+const val TODAY_WORD_ID = -1L
+
 class GetTodaysWordUseCase
 constructor(
 	private val localRepo: WordsRepository.Local,

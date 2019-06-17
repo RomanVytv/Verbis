@@ -8,10 +8,7 @@
 			android:id="@+id/favoritesFragment"
 			android:icon="@drawable/ic_star"
 			android:title="@string/lbl_favorites"/>
-	<item
-			android:id="@+id/searchFragment"
-			android:icon="@drawable/ic_search"
-			android:title="@string/lbl_search"/>
+
 	<item
 			android:id="@+id/detailsFragment"
 			android:icon="@drawable/ic_today"

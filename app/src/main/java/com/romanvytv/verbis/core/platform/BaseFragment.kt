@@ -9,6 +9,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.snackbar.Snackbar
 import com.romanvytv.verbis.core.exception.Failure
+import android.app.Activity
+import android.view.inputmethod.InputMethodManager
+
 
 abstract class BaseFragment : Fragment() {
 
@@ -28,5 +31,10 @@ abstract class BaseFragment : Fragment() {
 
 	fun notify(message: String) =
 		Snackbar.make(requireActivity().findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT).show()
+
+	fun hideKeyboard() {
+		val imm = activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+		imm.hideSoftInputFromWindow(view?.windowToken, 0)
+	}
 }
 

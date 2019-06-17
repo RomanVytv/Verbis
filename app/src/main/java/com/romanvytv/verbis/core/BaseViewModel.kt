@@ -10,8 +10,6 @@ import org.koin.core.KoinComponent
  */
 abstract class BaseViewModel : ViewModel(), KoinComponent {
 
-	abstract fun load()
-
 	var failure: MutableLiveData<Failure> = MutableLiveData()
 
 	fun handleFailure(failure: Failure?) {

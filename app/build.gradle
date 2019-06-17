@@ -75,5 +75,7 @@ dependencies {
 
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0"
 
+    implementation "com.paulrybitskyi.persistentsearchview:persistentsearchview:1.0.0"
+
 
 }
