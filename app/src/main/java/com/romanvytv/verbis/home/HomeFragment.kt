@@ -1,5 +1,6 @@
 package com.romanvytv.verbis.home
 
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
@@ -70,13 +71,24 @@ class HomeFragment : BaseFragment() {
 		})
 	}
 
+	private fun handleIntent() {
+		val intent = requireActivity().intent
+		val action = intent.action
+		val type = intent.type
+
+		if (Intent.ACTION_SEND == action && type == "text/plain") {
+			persistentSearchView.setQuery(intent.getStringExtra(Intent.EXTRA_TEXT), true)
+		}
+
+		requireActivity().intent.type = null
+	}
+
 	private fun showWords(words: List<Word>?) {
 		if (words == null || words.isEmpty())
 			tvNoWords.visibility = View.VISIBLE
 
 		progressBarHome.visibility = View.GONE
 		wordsAdapter = WordsListAdapter(words ?: Collections.emptyList())
-
 		wordsAdapter.favoriteClickListener = object : WordsListAdapter.FavoriteClickListener {
 			override fun onFavoriteClick(wordId: Long?, isFavorite: Boolean) {
 				viewModel.setFavorite(wordId, isFavorite)
@@ -92,6 +104,7 @@ class HomeFragment : BaseFragment() {
 		}
 
 		wordsRecyclerView.adapter = wordsAdapter
+		handleIntent()
 	}
 
 	fun filterFavorites(onlyFavorites: Boolean) = wordsAdapter.getFavoriteFilter(onlyFavorites).filter("")
