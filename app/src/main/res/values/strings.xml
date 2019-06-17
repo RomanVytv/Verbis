@@ -10,5 +10,6 @@
 
     <string name="lbl_type_of">type of</string>
     <string name="lbl_derivations">derivations</string>
+	<string name="no_words_found">No words found</string>
 
 </resources>

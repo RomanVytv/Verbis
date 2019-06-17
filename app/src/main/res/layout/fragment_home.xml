@@ -3,12 +3,37 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:orientation="vertical"
-		xmlns:android="http://schemas.android.com/apk/res/android">
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		xmlns:tools="http://schemas.android.com/tools">
 
-	<com.paulrybitskyi.persistentsearchview.PersistentSearchView
+	<com.lapism.searchview.widget.SearchBar
 			android:id="@+id/persistentSearchView"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:padding="@dimen/margin_standard"/>
+			app:defaultQueryHint="@string/lbl_search"/>
+
+	<ProgressBar
+			android:id="@+id/progressBarHome"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerInParent="true"
+			style="?android:attr/progressBarStyle"/>
+
+	<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/wordsRecyclerView"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_below="@id/persistentSearchView"/>
+
+	<TextView
+			android:id="@+id/tvNoWords"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerInParent="true"
+			android:text="@string/no_words_found"
+			android:textSize="@dimen/txt_size_medium"
+			android:visibility="gone"
+			tools:ignore="SpUsage"/>
 
 </RelativeLayout>

@@ -40,8 +40,8 @@ class DetailsFragment : BaseFragment() {
 				setFavoriteIcon(word.isFavorite)
 			}
 
-			if (!TextUtils.isEmpty(word.pronunciation.value)) {
-				tvPronunciation.text = "[/${word.pronunciation.value}/]"
+			if (!TextUtils.isEmpty(word.pronunciation?.value)) {
+				tvPronunciation.text = "[/${word.pronunciation?.value}/]"
 				tvPronunciation.visibility = View.VISIBLE
 			} else {
 				tvPronunciation.visibility = View.GONE

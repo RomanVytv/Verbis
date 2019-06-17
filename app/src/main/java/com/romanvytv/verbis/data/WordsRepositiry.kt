@@ -1,5 +1,7 @@
 package com.romanvytv.verbis.data
 
+import android.util.Log
+import com.google.gson.JsonSyntaxException
 import com.romanvytv.verbis.core.Either
 import com.romanvytv.verbis.core.exception.Failure
 import com.romanvytv.verbis.data.entities.TodayWord
@@ -37,9 +39,7 @@ abstract class WordsRepository {
 
 		fun getAllWords() = db.wordDao().getAllWords()
 
-		fun getFavoriteWords() = db.wordDao().getFavoriteWords()
-
-
+		fun setFavotire(wordId: Long, isFavorite: Boolean) = db.wordDao().setFavorite(wordId, isFavorite)
 	}
 
 	protected suspend fun <T, R> request(
@@ -47,8 +47,15 @@ abstract class WordsRepository {
 		transform: (T) -> R,
 		default: T
 	): Either<Failure, R> {
-		val response = request.await()
-		return when (response.isSuccessful) {
+		var response: Response<T>? = null
+
+		try {
+			response = request.await()
+		} catch (ex: JsonSyntaxException) {
+			Log.e("JsonSyntaxException", ex.stackTrace.toString())
+		}
+
+		return when (response != null && response.isSuccessful) {
 			true -> Either.Right(transform((response.body() ?: default)))
 			false -> Either.Left(Failure.ServerError)
 		}

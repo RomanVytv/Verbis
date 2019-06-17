@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:padding="@dimen/margin_standard"
+		tools:ignore="SpUsage"
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:tools="http://schemas.android.com/tools">
+
+	<TextView
+			android:id="@+id/tvWord"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentStart="true"
+			android:layout_centerVertical="true"
+			android:layout_marginEnd="@dimen/margin_standard"
+			android:layout_toStartOf="@+id/tvPronunciation"
+			android:textColor="@color/primaryDarkColor"
+			android:textSize="@dimen/txt_size_medium"
+			tools:text="@string/lbl_details"/>
+
+	<TextView
+			android:id="@+id/tvPronunciation"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:layout_marginEnd="@dimen/margin_standard"
+			android:layout_toStartOf="@+id/ivFavorite"
+			android:textSize="@dimen/txt_size_small"
+			tools:text="pronunciation"/>
+
+	<ImageView
+			android:id="@+id/ivFavorite"
+			android:layout_width="@dimen/margin_standard_x3"
+			android:layout_height="@dimen/margin_standard_x3"
+			android:layout_alignParentEnd="true"
+			android:layout_centerVertical="true"
+			android:scaleType="fitCenter"
+			android:src="@drawable/ic_star_border_yellow"/>
+
+</RelativeLayout>

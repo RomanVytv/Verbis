@@ -8,30 +8,39 @@ import java.util.*
 
 @Entity(tableName = "words")
 data class Word(
-    @PrimaryKey(autoGenerate = true)
-    var id: Long?,
-    var word: String,
-    var isFavorite: Boolean,
-    var frequency: Double,
-    @Ignore
-    var results: List<Result>,
-    @Embedded
-    var pronunciation: Pronunciation
+	@PrimaryKey(autoGenerate = true)
+	var id: Long?,
+	var word: String,
+	var isFavorite: Boolean,
+	var frequency: Double,
+	@Ignore
+	var results: List<Result>,
+	@Embedded
+	var pronunciation: Pronunciation?
 ) {
-    constructor() : this(
-        null,
-        word = "",
-        isFavorite = false,
-        frequency = 0.0,
-        results = Collections.emptyList(),
-        pronunciation = Pronunciation("")
-    )
+	constructor() : this(
+		null,
+		word = "",
+		isFavorite = false,
+		frequency = 0.0,
+		results = Collections.emptyList(),
+		pronunciation = Pronunciation("")
+	)
 
-    data class Pronunciation(
-        val value: String
-    )
+	constructor(id: Long?, isFavorite: Boolean) : this(
+		id = id,
+		word = "",
+		isFavorite = isFavorite,
+		frequency = 0.0,
+		results = Collections.emptyList(),
+		pronunciation = Pronunciation("")
+	)
 
-    companion object {
-        fun empty() = Word()
-    }
+	data class Pronunciation(
+		val value: String
+	)
+
+	companion object {
+		fun empty() = Word()
+	}
 }

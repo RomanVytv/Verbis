@@ -11,7 +11,7 @@ import com.romanvytv.verbis.data.entities.Result
 interface ResultDao {
 
     @Query("SELECT * FROM words_results WHERE wordId LIKE :wordId")
-    fun getResultByWordId(wordId : Long)
+    fun getResultByWordId(wordId: Long) : List<Result>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(result: Result) : Long
