@@ -17,6 +17,7 @@ constructor(private val wordsList: List<Word>) : RecyclerView.Adapter<WordsListA
 	private var wordsListFiltered: List<Word> = wordsList
 
 	lateinit var favoriteClickListener: FavoriteClickListener
+	lateinit var wordClickListener: WordClickListener
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
 		ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item_word, parent, false))
@@ -24,11 +25,11 @@ constructor(private val wordsList: List<Word>) : RecyclerView.Adapter<WordsListA
 	override fun getItemCount() = wordsListFiltered.size
 
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) =
-		holder.bind(wordsListFiltered[position], favoriteClickListener)
+		holder.bind(wordsListFiltered[position], favoriteClickListener, wordClickListener)
 
 	class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-		fun bind(word: Word, favoriteClickListener: FavoriteClickListener) {
+		fun bind(word: Word, favoriteClickListener: FavoriteClickListener, wordClickListener: WordClickListener) {
 			itemView.tvWord.text = word.word
 			itemView.tvPronunciation.text = word.pronunciation?.value
 			setFavoriteIcon(word.isFavorite)
@@ -37,6 +38,7 @@ constructor(private val wordsList: List<Word>) : RecyclerView.Adapter<WordsListA
 				favoriteClickListener.onFavoriteClick(word.id, word.isFavorite)
 				setFavoriteIcon(word.isFavorite)
 			}
+			itemView.setOnClickListener { wordClickListener.onWordClick(word.id!!) }
 		}
 
 		private fun setFavoriteIcon(isFavorite: Boolean) = if (isFavorite)
@@ -96,5 +98,9 @@ constructor(private val wordsList: List<Word>) : RecyclerView.Adapter<WordsListA
 
 	interface FavoriteClickListener {
 		fun onFavoriteClick(wordId: Long?, isFavorite: Boolean)
+	}
+
+	interface WordClickListener {
+		fun onWordClick(wordId: Long)
 	}
 }

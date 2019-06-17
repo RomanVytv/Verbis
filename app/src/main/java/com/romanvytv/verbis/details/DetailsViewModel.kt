@@ -7,11 +7,14 @@ import com.romanvytv.verbis.core.BaseViewModel
 import com.romanvytv.verbis.core.UseCase
 import com.romanvytv.verbis.data.entities.Word
 import com.romanvytv.verbis.domain.usecases.GetTodaysWordUseCase
+import com.romanvytv.verbis.domain.usecases.GetWordDetailsUseCase
 import com.romanvytv.verbis.domain.usecases.SetFavoriteUseCase
 import com.romanvytv.verbis.domain.usecases.TODAY_WORD_ID
 import org.koin.core.get
+
 class DetailsViewModel : BaseViewModel() {
 
+	private var getWordDetailsUseCase: GetWordDetailsUseCase = get()
 	private var getTodaysWordUseCase: GetTodaysWordUseCase = get()
 	private var setFavoriteUseCase: SetFavoriteUseCase = get()
 
@@ -24,7 +27,7 @@ class DetailsViewModel : BaseViewModel() {
 			return
 		}
 
-
+		getWordDetailsUseCase(viewModelScope, wordId) { it.either(::handleFailure, ::handleWord) }
 	}
 
 	private fun handleWord(word: Word) {

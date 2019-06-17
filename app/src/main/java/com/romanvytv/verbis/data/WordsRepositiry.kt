@@ -39,6 +39,8 @@ abstract class WordsRepository {
 
 		fun getWord(word: String) = db.wordDao().getWord(word)
 
+		fun getWordById(wordId: Long) = db.wordDao().getWordById(wordId)
+
 		fun getAllWords() = db.wordDao().getAllWords()
 
 		fun setFavotire(wordId: Long, isFavorite: Boolean) = db.wordDao().setFavorite(wordId, isFavorite)

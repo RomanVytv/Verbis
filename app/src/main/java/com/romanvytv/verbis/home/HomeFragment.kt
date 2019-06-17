@@ -4,6 +4,7 @@ import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lapism.searchview.Search
@@ -12,6 +13,7 @@ import com.romanvytv.verbis.core.failure
 import com.romanvytv.verbis.core.observe
 import com.romanvytv.verbis.core.platform.BaseFragment
 import com.romanvytv.verbis.data.entities.Word
+import com.romanvytv.verbis.details.WORD_ID
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.util.*
 
@@ -74,13 +76,22 @@ class HomeFragment : BaseFragment() {
 
 		progressBarHome.visibility = View.GONE
 		wordsAdapter = WordsListAdapter(words ?: Collections.emptyList())
+
 		wordsAdapter.favoriteClickListener = object : WordsListAdapter.FavoriteClickListener {
 			override fun onFavoriteClick(wordId: Long?, isFavorite: Boolean) {
 				viewModel.setFavorite(wordId, isFavorite)
 			}
 		}
-		wordsRecyclerView.adapter = wordsAdapter
+		wordsAdapter.wordClickListener = object : WordsListAdapter.WordClickListener {
+			override fun onWordClick(wordId: Long) {
+				val bundle = Bundle()
+				bundle.putLong(WORD_ID, wordId)
+				Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+					.navigate(R.id.detailsFragment, bundle)
+			}
+		}
 
+		wordsRecyclerView.adapter = wordsAdapter
 	}
 
 	fun filterFavorites(onlyFavorites: Boolean) = wordsAdapter.getFavoriteFilter(onlyFavorites).filter("")

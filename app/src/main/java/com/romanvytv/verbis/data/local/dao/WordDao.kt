@@ -15,14 +15,14 @@ interface WordDao {
 	@Query("SELECT * FROM words WHERE words.isFavorite IS 1")
 	fun getFavoriteWords(): List<Word>
 
-	@Query("SELECT * FROM words WHERE words.id = :wordId")
-	fun getWordById(wordId: Long): List<Word>
+	@Query("SELECT * FROM words WHERE words.id = :wordId LIMIT 1")
+	fun getWordById(wordId: Long): Word
 
 	@Query("SELECT * FROM words WHERE words.word = :word LIMIT 1")
 	fun getWord(word: String): Word
 
 	@Query("UPDATE words SET isFavorite = :isFavorite WHERE id = :wordId")
-	fun setFavorite(wordId: Long, isFavorite :Boolean)
+	fun setFavorite(wordId: Long, isFavorite: Boolean)
 
 	@Insert(onConflict = REPLACE)
 	fun insert(word: Word): Long

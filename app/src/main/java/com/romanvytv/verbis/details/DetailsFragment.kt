@@ -13,6 +13,8 @@ import com.romanvytv.verbis.domain.usecases.TODAY_WORD_ID
 import kotlinx.android.synthetic.main.fragment_details.*
 import kotlinx.android.synthetic.main.list_item_result.view.*
 
+const val WORD_ID = "wordId"
+
 class DetailsFragment : BaseFragment() {
 	override fun layoutId() = R.layout.fragment_details
 
@@ -26,7 +28,7 @@ class DetailsFragment : BaseFragment() {
 			failure(failure, ::handleFail)
 		}
 
-		viewModel.load(arguments?.getLong("wordId") ?: TODAY_WORD_ID)
+		viewModel.load(arguments?.getLong(WORD_ID) ?: TODAY_WORD_ID)
 	}
 
 	private fun init(word: Word?) {

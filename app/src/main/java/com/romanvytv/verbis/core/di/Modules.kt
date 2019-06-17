@@ -20,6 +20,7 @@ val useCasesModule = module {
 	factory { GetRandomWordUseCase(get(), get()) }
 	factory { GetAllWordsUseCase(get()) }
 	factory { SetFavoriteUseCase(get()) }
+	factory { GetWordDetailsUseCase(get(), get()) }
 	factory { SearchWordUseCase(get(), get()) }
 	factory { GetTodaysWordUseCase(get(), get()) }
 }
