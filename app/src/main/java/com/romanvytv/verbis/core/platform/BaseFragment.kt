@@ -27,7 +27,7 @@ abstract class BaseFragment : Fragment() {
 		return vm
 	}
 
-	fun handleFail(failure: Failure?) = notify(failure.toString())
+	open fun handleFail(failure: Failure?) = notify(failure.toString())
 
 	fun notify(message: String) =
 		Snackbar.make(requireActivity().findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT).show()

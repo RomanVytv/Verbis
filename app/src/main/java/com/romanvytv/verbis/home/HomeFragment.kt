@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lapism.searchview.Search
 import com.romanvytv.verbis.R
+import com.romanvytv.verbis.core.exception.Failure
 import com.romanvytv.verbis.core.failure
 import com.romanvytv.verbis.core.observe
 import com.romanvytv.verbis.core.platform.BaseFragment
@@ -83,6 +84,13 @@ class HomeFragment : BaseFragment() {
 		requireActivity().intent.type = null
 	}
 
+	override fun handleFail(failure: Failure?) {
+		super.handleFail(failure)
+		progressBarHome.visibility = View.GONE
+		wordsAdapter.filter.filter("")
+
+	}
+
 	private fun showWords(words: List<Word>?) {
 		if (words == null || words.isEmpty())
 			tvNoWords.visibility = View.VISIBLE
@@ -104,6 +112,10 @@ class HomeFragment : BaseFragment() {
 		}
 
 		wordsRecyclerView.adapter = wordsAdapter
+
+		if(arguments != null && arguments!!.getBoolean(ONLY_FAVORITES))
+			filterFavorites(true)
+
 		handleIntent()
 	}
 
