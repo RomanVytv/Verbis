@@ -113,7 +113,7 @@ class HomeFragment : BaseFragment() {
 
 		wordsRecyclerView.adapter = wordsAdapter
 
-		if(arguments != null && arguments!!.getBoolean(ONLY_FAVORITES))
+		if (arguments != null && arguments!!.getBoolean(ONLY_FAVORITES))
 			filterFavorites(true)
 
 		handleIntent()
@@ -144,7 +144,7 @@ class HomeFragment : BaseFragment() {
 
 	private fun onKeyboardVisibilityChanged(isVisible: Boolean) {
 		if (!isVisible) {
-			persistentSearchView.setQuery("", false)
+			persistentSearchView?.setQuery("", false)
 			viewModel.load()
 		}
 	}
